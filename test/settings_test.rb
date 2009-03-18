@@ -17,7 +17,23 @@ class SettingsTest < Test::Unit::TestCase
           end
       
           should "return hash of settings" do
-            assert_equal({ :foo => 'bar', :abc => { 'def' => 123 } }, @settings)
+            assert @settings.is_a?(SettingsHash)
+          end
+          
+          should "symbolize keys" do
+            assert @settings.has_key?(:foo)
+          end
+          
+          should "symbolize nested keys" do
+            assert @settings[:abc].has_key?(:def)
+          end
+          
+          should "set nested values" do
+            assert_equal 123, @settings[:abc][:def]
+          end
+          
+          should "have bar for :foo" do
+            assert_equal 'bar', @settings[:foo]
           end
           
           should "freeze settings" do
@@ -45,7 +61,7 @@ class SettingsTest < Test::Unit::TestCase
           end
         end
       end
-            
+      
       context "outside of test namespace" do
         should "return hash of settings" do
           assert_equal({ :baz => 'bang' }, SettingsHash.new(File.join(fixture_path, 'no_namespace.yml')))
