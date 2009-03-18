@@ -9,27 +9,27 @@ Description
 Small and simple specialized Hash which is helpful for storing immutable,
 required key/value pairs to be loaded from a YAML file.
 
-New instances of @SettingsHash@ are readonly -- any attempt to write to the
-Hash after initialization will fail with a @TypeError@.
+New instances of `SettingsHash` are readonly -- any attempt to write to the
+Hash after initialization will fail with a `TypeError`.
 
 Any attempt to read a key which is not set will raise a 
-@SettingsHash::SettingMissing@ error.
+`SettingsHash::SettingMissing` error.
 
-@SettingsHash@ supports an optional namespace which can be used to define
+`SettingsHash` supports an optional namespace which can be used to define
 multiple groups of settings within a single .yml file. For example, "test" and
 "development" might be different namespaces for different running environments.
 
 Usage
 -----
 
-== General
+### General
 
     settings = SettingsHash.new('path/to/settings.yml')
     settings = SettingsHash.new('path/to/settings.yml', 'foo') => loads settings under the 'foo' namespace
     
-== Rails
+### Rails
 
-Put your environment-specific @settings.yml@ in @config/settings.yml@. It may
+Put your environment-specific `settings.yml` in `config/settings.yml`. It may
 look something like this:
 
     development:
@@ -37,15 +37,12 @@ look something like this:
     test:
       memcached: false
       
-This file will automatically be loaded into a @Settings@ global which can be
+This file will automatically be loaded into a `Settings` global which can be
 accessed like a normal Hash:
 
     Settings[:memcached] => true (development environment)
     Settings[:memcached] => false (test environment)
     
-Rails Usage
------------
-
 Installation
 ------------
 
