@@ -35,10 +35,10 @@ class SettingsHash < ReadonlyHash
   # Optionally loads only the settings within the given namespace (if a
   # namespace is given)
   # 
-  #     SettingsHash.new('/path/to/settings.yml')       => { :foo => { 'bar' => 'baz' }, :bam => 'bang' }
+  #     SettingsHash.new('/path/to/settings.yml')       => { :foo => { :bar => 'baz' }, :bam => 'bang' }
   #     SettingsHash.new('/path/to/settings.yml, 'foo') => { :bar => 'baz' }
   # 
-  # Note that top-level keys are symbolized (as seen in example above)
+  # Note that hash keys are symbolized (as seen in example above)
   def initialize(path, namespace=nil)
     raise "No settings file found: #{path}" unless File.exists?(path)
     settings = YAML.load_file(path)
