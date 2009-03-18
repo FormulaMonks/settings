@@ -49,6 +49,13 @@ Installation
     $ gem sources -a http://gems.github.com (you only have to do this once)
     $ sudo gem install citrusbyte-settings
 
+Testing
+-------
+    
+Tests require Contest gem:
+
+    http://github.com/citrusbyte/contest
+
 License
 -------
 
