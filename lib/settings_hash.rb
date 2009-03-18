@@ -18,6 +18,7 @@ class SettingsHash < ReadonlyHash
   
   def [](key)
     raise SettingMissing.new("No setting found for #{key}") unless has_key?(key)
+    super
   end
 end
 

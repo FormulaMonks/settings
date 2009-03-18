@@ -17,13 +17,17 @@ class SettingsTest < Test::Unit::TestCase
           end
       
           test "should return hash of settings" do
-            assert_equal({ :foo => 'bar' }, @settings)
+            assert_equal({ :foo => 'bar', :abc => { 'def' => 123 } }, @settings)
           end
-    
+          
           test "should freeze settings" do
             assert_raise TypeError do
               @settings[:foo] = 'baz'
             end
+          end
+          
+          test "should return value for key if set" do
+            assert_equal 'bar', @settings[:foo]
           end
       
           test "should raise if key is not set" do
