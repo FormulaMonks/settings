@@ -2,7 +2,7 @@ require 'readonly_hash'
 require 'yaml'
 
 class SettingsHash < ReadonlyHash
-  class SettingMissing < StandardError;end;
+  class SettingNotFound < StandardError;end;
   
   def initialize(path, namespace=nil)
     raise "No settings file found: #{path}" unless File.exists?(path)
@@ -17,7 +17,7 @@ class SettingsHash < ReadonlyHash
   end
   
   def [](key)
-    raise SettingMissing.new("No setting found for #{key}") unless has_key?(key)
+    raise SettingNotFound.new("No setting found for #{key}") unless has_key?(key)
     super
   end
 end

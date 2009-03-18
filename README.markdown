@@ -13,7 +13,7 @@ New instances of `SettingsHash` are readonly -- any attempt to write to the
 Hash after initialization will fail with a `TypeError`.
 
 Any attempt to read a key which is not set will raise a 
-`SettingsHash::SettingMissing` error.
+`SettingsHash::SettingNotFound` error.
 
 `SettingsHash` supports an optional namespace which can be used to define
 multiple groups of settings within a single .yml file. For example, "test" and

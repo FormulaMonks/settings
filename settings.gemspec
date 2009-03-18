@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'settings'
-  s.version = '0.0.1'
+  s.version = '0.0.2'
   s.summary = %{A special hash for application-wide settings}
   s.date = %q{2009-03-17}
   s.author = "Ben Alavi"

@@ -31,7 +31,7 @@ class SettingsTest < Test::Unit::TestCase
           end
       
           test "should raise if key is not set" do
-            assert_raise SettingsHash::SettingMissing do
+            assert_raise SettingsHash::SettingNotFound do
               @settings[:bar]
             end
           end
