@@ -16,21 +16,21 @@ class SettingsTest < Test::Unit::TestCase
             @settings = SettingsHash.new(File.join(fixture_path, 'settings.yml'), 'test')
           end
       
-          test "should return hash of settings" do
+          should "return hash of settings" do
             assert_equal({ :foo => 'bar', :abc => { 'def' => 123 } }, @settings)
           end
           
-          test "should freeze settings" do
+          should "freeze settings" do
             assert_raise TypeError do
               @settings[:foo] = 'baz'
             end
           end
           
-          test "should return value for key if set" do
+          should "return value for key if set" do
             assert_equal 'bar', @settings[:foo]
           end
       
-          test "should raise if key is not set" do
+          should "raise if key is not set" do
             assert_raise SettingsHash::SettingNotFound do
               @settings[:bar]
             end
@@ -38,7 +38,7 @@ class SettingsTest < Test::Unit::TestCase
         end
         
         context "and namespace doesnt exist" do
-          test "should raise" do
+          should "raise" do
             assert_raise RuntimeError do
               SettingsHash.new(File.join(fixture_path, 'settings.yml'), 'foo')
             end
@@ -47,7 +47,7 @@ class SettingsTest < Test::Unit::TestCase
       end
             
       context "outside of test namespace" do
-        test "should return hash of settings" do
+        should "return hash of settings" do
           assert_equal({ :baz => 'bang' }, SettingsHash.new(File.join(fixture_path, 'no_namespace.yml')))
         end
       end
@@ -55,7 +55,7 @@ class SettingsTest < Test::Unit::TestCase
   end
   
   context "settings file doesnt exist" do
-    test "should raise" do
+    should "raise" do
       assert_raise RuntimeError do
         SettingsHash.new(File.join(fixture_path, 'missing.yml'))
       end
