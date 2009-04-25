@@ -1,1 +1,1 @@
-require 'rails'
+require 'settings'

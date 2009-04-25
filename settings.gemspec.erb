@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.email = "ben.alavi@citrusbyte.com"
   s.homepage = "http://labs.citrusbyte.com/projects/settings"
   s.specification_version = 2 if s.respond_to? :specification_version=
-  s.files = ["lib/settings.rb", "lib/settings_hash.rb", "README.markdown", "LICENSE", "Rakefile", "rails/init.rb", "test/fixtures/empty.yml", "test/fixtures/no_namespace.yml", "test/fixtures/settings.yml", "test/settings_test.rb"]
+  s.files = <%= FileList['lib/**/*.rb', 'README*', 'LICENSE', 'Rakefile', 'rails/**/*', 'test/**/*.*'].inspect %>
   s.require_paths = ['lib']
   s.has_rdoc = false
 end
