@@ -46,8 +46,7 @@ accessed like a normal Hash:
 Installation
 ------------
 
-    $ gem sources -a http://gems.github.com (you only have to do this once)
-    $ sudo gem install citrusbyte-settings
+    $ sudo gem install settings
 
 Testing
 -------

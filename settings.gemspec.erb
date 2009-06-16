@@ -8,8 +8,5 @@ Gem::Specification.new do |s|
   s.author = "Ben Alavi"
   s.email = "ben.alavi@citrusbyte.com"
   s.homepage = "http://labs.citrusbyte.com/projects/settings"
-  s.specification_version = 2 if s.respond_to? :specification_version=
   s.files = %w( <%= Dir.glob(['lib/**/*.rb', 'README*', 'LICENSE', 'Rakefile', 'rails/**/*', 'test/**/*.*']).join(" ") %> )
-  s.require_paths = ['lib']
-  s.has_rdoc = false
 end
