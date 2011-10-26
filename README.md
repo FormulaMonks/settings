@@ -50,7 +50,7 @@ Settings::Hash:
 
 Cuba:
 
-    Cuba.send :extend, Settings
+    Cuba.extend Settings
     
     Cuba.define do
       on "/" do
@@ -72,7 +72,7 @@ Rails:
     
     gem "settings", "0.0.4" # (in `Gemfile`)
     
-    Rails.send :extend, Settings # (in `config/initializers/settings.rb`)
+    Rails.extend Settings # (in `config/initializers/settings.rb`)
     
     class WidgetController < ActionController::Base
       def index
