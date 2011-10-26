@@ -15,7 +15,7 @@ module Settings
     # Raised when attempting to access a key which has not been set.
     class SettingNotFound < StandardError;end;
 
-    # Creates a new SettingsHash from a YAML file located at the given path.
+    # Creates a new Settings::Hash from a YAML file located at the given path.
     # 
     # Optionally loads only the settings within the given namespace (if a
     # namespace is given)
@@ -40,8 +40,8 @@ module Settings
       freeze
     end
 
-    # Access the value at the given key, raises SettingsHash::SettingNotFound if
-    # the key is not set.
+    # Access the value at the given key, raises Settings::Hash::SettingNotFound
+    # if the key is not set.
     def [](key)
       raise SettingNotFound.new("No setting found for #{key.inspect}") unless has_key?(key)
       super
