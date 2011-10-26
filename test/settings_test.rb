@@ -1,80 +1,79 @@
-require 'test/unit'
-require 'rubygems'
-require 'contest'
-require File.dirname(__FILE__) + "/../lib/settings_hash"
+$: << File.expand_path("../lib", File.dirname(__FILE__))
+
+require "rubygems"
+require "test/unit"
+require "contest"
+require "settings"
 
 def fixture_path
-  File.join(File.dirname(__FILE__), 'fixtures')
+  File.join(File.dirname(__FILE__), "fixtures")
+end
+
+class Application
+end
+
+class Widget
 end
 
 class SettingsTest < Test::Unit::TestCase
-  context "settings file exists" do
-    context "and has values" do
-      context "in test namespace" do
-        context "and namespace exists" do
-          setup do
-            @settings = SettingsHash.new(File.join(fixture_path, 'settings.yml'), 'test')
-          end
-      
-          should "return hash of settings" do
-            assert @settings.is_a?(SettingsHash)
-          end
-          
-          should "symbolize keys" do
-            assert @settings.has_key?(:foo)
-          end
-          
-          should "symbolize nested keys" do
-            assert @settings[:abc].has_key?(:def)
-          end
-          
-          should "set nested values" do
-            assert_equal 123, @settings[:abc][:def]
-          end
-          
-          should "have bar for :foo" do
-            assert_equal 'bar', @settings[:foo]
-          end
-          
-          should "freeze settings" do
-            assert_raise TypeError do
-              @settings[:foo] = 'baz'
-            end
-          end
-          
-          should "return value for key if set" do
-            assert_equal 'bar', @settings[:foo]
-          end
-      
-          should "raise if key is not set" do
-            assert_raise SettingsHash::SettingNotFound do
-              @settings[:bar]
-            end
-          end
-        end
-        
-        context "and namespace doesnt exist" do
-          should "raise" do
-            assert_raise RuntimeError do
-              SettingsHash.new(File.join(fixture_path, 'settings.yml'), 'foo')
-            end
-          end
-        end
-      end
-      
-      context "outside of test namespace" do
-        should "return hash of settings" do
-          assert_equal({ :baz => 'bang' }, SettingsHash.new(File.join(fixture_path, 'no_namespace.yml')))
-        end
-      end
+  should "return hash of all settings when no namespace is present" do
+    assert_equal({ :foo => "bar" }, Settings::Hash.new(File.join(fixture_path, "no_namespace.yml")))
+  end
+
+  should "load all settings" do
+    settings = Settings::Hash.new File.join(fixture_path, "settings.yml")
+    assert_equal({ "test" => { :foo => "bar", "abc" => { "def" => 123 } } }, settings)
+  end
+
+  should "only load settings in given namespace" do
+    settings = Settings::Hash.new(File.join(fixture_path, "settings.yml"), "test")
+    assert_equal({ :foo => "bar", "abc" => { "def" => 123 } }, settings)
+  end
+  
+  should "raise when attempting to change a setting" do
+    settings = Settings::Hash.new File.join(fixture_path, "settings.yml")
+    assert_raise TypeError do
+      settings[:foo] = "baz"
     end
   end
   
-  context "settings file doesnt exist" do
-    should "raise" do
-      assert_raise RuntimeError do
-        SettingsHash.new(File.join(fixture_path, 'missing.yml'))
-      end
+  should "raise when attempting to add a setting" do
+    settings = Settings::Hash.new File.join(fixture_path, "settings.yml")
+    assert_raise TypeError do
+      settings[:bar] = "bam"
     end
+  end
+  
+  should "raise if key is not set" do
+    settings = Settings::Hash.new File.join(fixture_path, "settings.yml")
+    assert_raise Settings::Hash::SettingNotFound do
+      settings[:bar]
+    end
+  end
+
+  should "raise when settings file does not exist" do
+    assert_raise Errno::ENOENT do
+      Settings::Hash.new(File.join(fixture_path, "missing.yml"))
+    end
+  end
+
+  should "raise when namespace doesn't exit" do
+    assert_raise RuntimeError do
+      Settings::Hash.new(File.join(fixture_path, 'settings.yml'), "foo")
+    end
+  end
+  
+  should "load settings from config/settings.yml when extended" do
+    ENV["RACK_ENV"] = "test"
+    
+    FileUtils.rm "config/settings.yml"
+    FileUtils.rmdir "config"
+    FileUtils.mkdir "config"
+    FileUtils.cp "test/fixtures/settings.yml", "config/settings.yml"
+    
+    assert !Application.respond_to?(:setting)
+    
+    Application.send :extend, Settings
+    assert_equal "bar", Application.setting(:foo)
   end
 end

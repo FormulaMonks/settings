@@ -1,4 +1,4 @@
 test:
-  foo: bar
+  :foo: bar
   abc:
     def: 123
