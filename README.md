@@ -35,7 +35,7 @@ Usage
     development:
       :foo: "abcdef"
 
-Settings::Hash:
+### Settings::Hash
 
     settings = Settings::Hash.new("config/settings.yml")
     settings["test"][:foo] #=> 123456
@@ -48,7 +48,7 @@ Settings::Hash:
     settings = Settings::Hash.new("config/settings.yml", ENV["RACK_ENV"])
     settings[:foo] #=> "abcdef"
 
-Cuba:
+### Cuba
 
     Cuba.extend Settings
     
@@ -58,7 +58,7 @@ Cuba:
       end
     end
 
-Sinatra:
+### Sinatra
   
     class MyApplication < Sinatra::Base
       extend Settings
@@ -68,7 +68,7 @@ Sinatra:
       end
     end
 
-Rails:
+### Rails
     
     gem "settings", "0.0.4" # (in `Gemfile`)
     
