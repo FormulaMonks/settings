@@ -46,5 +46,13 @@ module Settings
       raise SettingNotFound.new("No setting found for #{key.inspect}") unless has_key?(key)
       super
     end
+
+    def method_missing(key)
+      self[key.to_s]
+    rescue SettingNotFound
+      self[key.to_sym]
+    rescue SettingNotFound
+      super
+    end
   end
 end
