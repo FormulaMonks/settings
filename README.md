@@ -43,6 +43,7 @@ Usage
     
     settings = Settings::Hash.new("config/settings.yml", "test")
     settings[:foo] #=> 123456
+    settings.foo   #=> 123456
     
     ENV["RACK_ENV"] = "development"
     settings = Settings::Hash.new("config/settings.yml", ENV["RACK_ENV"])
